@@ -17,18 +17,18 @@ More info : [Game Of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 
 ## Installation
 
-Clone the repo
+1. Make sure you have SFML installed, you can check it [here](https://www.sfml-dev.org/) 
+
+2. Clone the repo
 
 ```
-git clone https://github.com/ihebhaboubi/Life.git
-cd Life
+git clone https://github.com/ihebhaboubi/Life.git && cd Life/
 ```
 
-Compile and run 
+3. Compile and run 
 
 ```
-make
-./life
+make && ./life
 ```
 
 ## Usage
