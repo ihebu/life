@@ -38,7 +38,7 @@ git clone https://github.com/ihebu/life.git
 cd life
 ```
 
-3. Compile the file using make: 
+3. Compile the source files using make: 
 
 ```
 make
