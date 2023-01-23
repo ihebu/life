@@ -1,2 +1,2 @@
-*.o
-life
+build
+.vscode
