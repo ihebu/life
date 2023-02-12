@@ -1,4 +1,6 @@
+#include <fstream>
 #include <utility>
+#include <unordered_map>
 #include <vector>
 
 #include <SFML/Graphics.hpp>
@@ -9,6 +11,32 @@ class Game
 private:
     sf::RenderWindow *window;
     std::vector<Cell> cells;
+
+    std::unordered_map<std::string, std::string> config;
+
+    void parseConfig()
+    {
+        std::ifstream config_file("config.ini");
+        std::string line;
+
+        while (std::getline(config_file, line))
+        {
+            if (line.empty() || line[0] == '[')
+            {
+                continue;
+            }
+
+            std::size_t separator = line.find('=');
+
+            if (separator != std::string::npos)
+            {
+                std::string key = line.substr(0, separator);
+                std::string value = line.substr(separator + 1);
+
+                config[key] = value;
+            }
+        }
+    }
 
     void initializeCells(int cell_size, int rows, int cols)
     {
@@ -72,20 +100,23 @@ private:
 public:
     Game()
     {
-        const int width = 1000;
-        const int height = 1000;
-        const int cell_size = 10;
-        const int rows = height / cell_size;
-        const int cols = width / cell_size;
+        parseConfig();
+
+        const int board_width = stoi(config["board_width"]);
+        const int board_height = stoi(config["board_height"]);
+        const int cell_size = stoi(config["cell_size"]);
+        const int frame_limit = stoi(config["frame_limit"]);
+        const std::string window_title = config["window_title"];
+
+        const int rows = board_height / cell_size;
+        const int cols = board_width / cell_size;
 
         initializeCells(cell_size, rows, cols);
 
-        const std::string title = "Conway's Game Of Life";
-        sf::VideoMode mode(width, height);
-        window = new sf::RenderWindow(mode, title);
+        sf::VideoMode mode(board_width, board_height);
+        window = new sf::RenderWindow(mode, window_title);
 
-        const int limit = 30;
-        window->setFramerateLimit(limit);
+        window->setFramerateLimit(frame_limit);
     }
 
     void runMainLoop()
@@ -93,6 +124,8 @@ public:
         while (window->isOpen())
         {
             sf::Event event;
+
+            // Close the windows if the exit button is pressed
             while (window->pollEvent(event))
             {
                 if (event.type == sf::Event::Closed)
