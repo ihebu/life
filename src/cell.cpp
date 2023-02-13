@@ -42,7 +42,7 @@ Cell::Cell(int cell_size, int x_pos, int y_pos)
     sf::Vector2f size(cell_size, cell_size);
     shape.setSize(size);
 
-    sf::Vector2f position(x_pos * cell_size, y_pos * cell_size);
+    sf::Vector2f position(y_pos * cell_size, x_pos * cell_size);
     shape.setPosition(position);
 
     // Randomly set the initial state of the cell, dead or alive
