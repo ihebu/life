@@ -53,7 +53,7 @@ private:
             int x = i / cols;
             int y = i % cols;
 
-            std::vector<Cell *> neighbors;
+            std::vector<Cell *> neighbours;
 
             for (int _x = x - 1; _x <= x + 1; _x++)
             {
@@ -69,11 +69,11 @@ private:
 
                     int j = new_x * cols + new_y;
 
-                    neighbors.push_back(&cells[j]);
+                    neighbours.push_back(&cells[j]);
                 }
             }
 
-            cells[i].addNeighbors(neighbors);
+            cells[i].addNeighbours(neighbours);
         }
     }
 

@@ -5,17 +5,23 @@
 #define BLACK sf::Color::Black
 #define WHITE sf::Color::White
 
-void Cell::setNextState()
+int Cell::getAliveNeighbours()
 {
-    // Number of neighbor cells alive
-    int count = 0;
+    int result = 0;
 
-    for (auto &n : neighbors)
+    for (auto &n : neighbours)
     {
-        count += n->state == State::ALIVE;
+        result += n->state == State::ALIVE;
     }
 
-    bool condition = (count == 3) || (state == State::ALIVE && count == 2);
+    return result;
+}
+
+void Cell::setNextState()
+{
+    int count_neighbours = getAliveNeighbours();
+
+    bool condition = (count_neighbours == 3) || (state == State::ALIVE && count_neighbours == 2);
 
     next_state = condition ? State::ALIVE : State::DEAD;
 }
@@ -32,9 +38,9 @@ void Cell::draw(sf::RenderWindow *window)
     window->draw(shape);
 }
 
-void Cell::addNeighbors(std::vector<Cell *> &neighbors_list)
+void Cell::addNeighbours(std::vector<Cell *> &neighbours_list)
 {
-    neighbors = neighbors_list;
+    neighbours = neighbours_list;
 }
 
 Cell::Cell(int cell_size, int x_pos, int y_pos)

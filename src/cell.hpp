@@ -14,9 +14,11 @@ class Cell
 {
 private:
     sf::RectangleShape shape;
-    std::vector<Cell *> neighbors;
+    std::vector<Cell *> neighbours;
 
     State state, next_state;
+
+    int getAliveNeighbours();
 
 public:
     void setNextState();
@@ -25,7 +27,7 @@ public:
 
     void draw(sf::RenderWindow *window);
 
-    void addNeighbors(std::vector<Cell *> &neighbors_list);
+    void addNeighbours(std::vector<Cell *> &neighbors_list);
 
     Cell(int size, int x_position, int y_position);
 };
